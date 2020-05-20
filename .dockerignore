@@ -1,0 +1,14 @@
+.idea
+/project/local_settings.py
+/virt_env/
+/venv/
+/reports/
+/media/
+/static/
+*.map
+*.pyc
+*.key
+*.retry
+ghostdriver.log
+mis_mm
+mis_mm.db
