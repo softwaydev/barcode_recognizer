@@ -16,7 +16,5 @@ RUN pip install -r requirements.txt
 COPY . /opt/app
 WORKDIR /opt/app
 
-RUN ./manage.py collectstatic --noinput && ln -s /static static
-
 CMD gunicorn project.wsgi --bind=0.0.0.0:8080 --workers=5
 
