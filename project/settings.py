@@ -1,5 +1,9 @@
 import os
 
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+true_strings = ['true', '1']
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATIC_URL = '/static/'
@@ -8,10 +12,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media/')
 
-SECRET_KEY = '60z-2n!f5rc1^vs)yv6t^t!r7%t*2c=5*0)x6!7wvgv*aoo6zf'
-DEBUG = True
+SECRET_KEY = os.getenv('SECRET_KEY')
 
-ALLOWED_HOSTS = ['127.0.0.1']
+DEBUG = os.getenv('DEBUG') in true_strings
+
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(', ')
 
 
 INSTALLED_APPS = [
@@ -19,7 +24,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework_swagger'
 ]
 
 MIDDLEWARE = [
@@ -92,7 +96,10 @@ LOGGING = {
         },
     }
 }
-try:
-    from project.local_settings import *
-except ImportError:
-    print("Warning: no local_settings.py")
+
+if os.getenv('SENTRY_KEY', None):
+    sentry_sdk.init(
+        dsn=os.getenv('SENTRY_KEY'),
+        integrations=[DjangoIntegration()],
+        send_default_pii=True
+    )
