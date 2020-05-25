@@ -12,7 +12,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media/')
 
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY', 'test')
 
 DEBUG = os.getenv('DEBUG') in true_strings
 
@@ -92,7 +92,7 @@ LOGGING = {
     'loggers': {
         '': {
             'handlers': ['console'],
-            'level': 'INFO',
+            'level': os.getenv('LOG_LEVEL', 'INFO'),
         },
     }
 }
