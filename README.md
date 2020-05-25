@@ -1,1 +1,2 @@
 # barcode_recognizer
+![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/softwaydev/barcode-recognizer) ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/softwaydev/barcode-recognizer)
